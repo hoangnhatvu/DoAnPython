@@ -18,9 +18,9 @@ class Index(View):
                     if quantity<=1:
                         cart.pop(product)
                     else:
-                        cart[product]  = quantity-1
+                        cart[product]  = quantity - 1
                 else:
-                    cart[product]  = quantity+1
+                    cart[product]  = quantity +1
 
             else:
                 cart[product] = 1
