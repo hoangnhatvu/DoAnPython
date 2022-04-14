@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 {% load cart %}
 {% load custom_filter %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> 
+<script src="https://cdn.baotrongit.com/Money-Format-Plugin/money_format.js"></script>
 <div class="container">
    <div class="border rounded p-4 m-4">
         <p class="display-4 pl-4 ml-4 btn btn-success rounded-pill">Giỏ hàng của bạn</p>
@@ -25,10 +26,20 @@
                 <tr>
                     <td>{{forloop.counter}}</td>
                     <td><img style="height: 80px;" class="rounded-circle" src="{{product.image.url}}" alt=""></td>
-                    <td>{{product.name}}</td>
-                    <td>{{product.price|currency}}</td>
+                    <td>{{product.name}}</td>                    
+                    <td><span class="money well">{{product.price}}</span>
+                    <script type="text/javascript">
+                    $('.money').simpleMoneyFormat();
+                    </script>
+                    <span class> VNĐ</span>
+                    </b></td>
                     <td>{{product|cart_quantity:request.session.cart}}</td>
-                    <td>{{product|price_total:request.session.cart|currency}}</td>
+                    <td><span class="money well">{{product|price_total:request.session.cart}}</span>
+                    <script type="text/javascript">
+                    $('.money').simpleMoneyFormat();
+                    </script>
+                    <span class> VNĐ</span>
+                    </b></td>                   
                 </tr>
 
                 {% endfor %}
@@ -39,14 +50,19 @@
                 <tr>
                     <th colspan="4"></th>
                     <th class="" colspan="">Tổng cộng</th>
-                    <th>{{products|total_cart_price:request.session.cart|currency}}</th>
+                    <td><span class="money well">{{products|total_cart_price:request.session.cart}}</span>
+                      <script type="text/javascript">
+                      $('.money').simpleMoneyFormat();
+                      </script>
+                      <span class> VNĐ</span>
+                      </b></td>                    
                 </tr>
             </tfoot>
         </table>
         <hr>
         <div class="m-3 p-3">
             <a href="#" data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-success border rounded  col-lg-3 float-right">Thanh toán</a>
-        </div>
+        </div>     
    </div>
 </div>
 
@@ -59,7 +75,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
-            Thanh toán
+            Thông tin thanh toán
           </h5>
           <hr>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -91,7 +107,7 @@
                   </select>
               </div>
 
-                  <input type="submit" class="btn float-right btn-outline-success col-lg-6" value="Check out">
+                  <input type="submit" class="btn float-right btn-outline-success col-lg-6" value="Thanh toán">
             </form>
           </div>
         </div>

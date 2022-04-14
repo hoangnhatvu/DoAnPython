@@ -5,6 +5,8 @@
 {% load cart %}
 {% load custom_filter %}
 <!-- body -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> 
+<script src="https://cdn.baotrongit.com/Money-Format-Plugin/money_format.js"></script>
 <div class="container-fluid mt-3">
 	<div class="row">
 
@@ -27,11 +29,35 @@
 		<div id='products' class="col-lg-9 mx-auto">
 			<div class="row mx-auto">
 				{% for product in products %}
-				<div class="card mx-auto mb-3" id={{product.id}} style="width: 18rem;">
-					<img class="card-img-top" src="{{product.image.url}}" alt="Card image cap">
+				<div class="card mx-auto mb-3" id={{product.id}} style="width: 18rem;">					
+					<div class="card-img-top">
+						<div>
+						<a href="#" data-toggle="modal" data-target="#exampleModal"><img title="" src="{{product.image.url}}" alt="Card image cap" width="100%"/></a>
+						</div>
+						</div>
+						<style>							
+							.card-img-top img{
+								display:block;
+								transition: all .2s ease;
+							}
+							.card-img-top img:hover{
+								transform: scale(0.95);
+							} 
+							.card-img-top div{
+								display:block;
+								overflow: hidden;
+							}							
+						</style>						
 					<div class="card-body">
-						<p class="card-title">{{product.name}}</p>
-						<p class="card-text"><b>{{product.price|currency}}</b></p>
+						<span style="font-size: 18px"><p class="card-title">{{product.name}}</p></span>							
+						<p class="card-text"><b>
+						<span class="money well">{{product.price}}</span>
+						<script type="text/javascript">
+						$('.money').simpleMoneyFormat();
+						</script>
+						<span class> VNĐ</span>
+						</b></p>				
+						
 						<!-- {{product | is_in_cart:request.session.cart }} -->
 					</div>
 
@@ -45,7 +71,7 @@
 								<input hidden type="text" name='remove' value='True'>
 								<input type="submit" value=" - " class="btn btn-block btn-success border-right">
 							</form>
-							<div class="text-center col btn btn-success">{{product|cart_quantity:request.session.cart}} in Cart</div>
+							<div class="text-center col btn btn-success">{{product|cart_quantity:request.session.cart}} Đã thêm</div>
 							<form action="/#{{product.id}}" class="col-2 " method="post">
 								{% csrf_token %}
 								<input hidden type="text" name='product' value='{{product.id}}'>
@@ -57,18 +83,39 @@
 							{% csrf_token %}
 							<input hidden type="text" name='product' value='{{product.id}}'>
 							<input type="submit" class="float-right btn btn-success form-control"
-								value="Add To Cart">
+								value="Thêm vào giỏ hàng">
 						</form>
 						{% endif %}
 
 					</div>
 
-				</div>
+				</div>				
 				{% endfor %}
 			</div>
 		</div>
 	</div>
 </div>
+
+ <!-- Modal -->
+ <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Thông tin sản phẩm
+          </h5>
+          <hr>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">          
+        <!--type body of information product here-->
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
 

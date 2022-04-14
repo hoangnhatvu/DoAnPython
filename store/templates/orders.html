@@ -4,21 +4,23 @@
 {% block content %}
 {% load cart %}
 {% load custom_filter %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> 
+<script src="https://cdn.baotrongit.com/Money-Format-Plugin/money_format.js"></script>
 <div class="container">
    <div class="border rounded p-4 m-4">
-        <p class="display-4 pl-4 ml-4">Your Orders</p>
+        <p class="display-4 pl-4 ml-4">Đơn hàng của bạn</p>
         <hr>
         <table class="table">
             <thead>
                 <tr>
-                    <th>Sno.</th>
-                    <th>Image</th>
-                    <th>Product</th>
-                    <th>Date</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
-                    <th>Status</th>
+                    <th>Số thứ tự</th>
+                    <th>Hình ảnh</th>
+                    <th>Sản phẩm</th>
+                    <th>Ngày</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Tổng</th>
+                    <th>Trạng thái</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,13 +31,23 @@
                     <td><img style="height: 80px;" class="rounded-circle" src="{{order.product.image.url}}" alt=""></td>
                     <td>{{order.product.name}}</td>
                     <td>{{order.date}}</td>
-                    <td>{{order.price|currency}}</td>
+                    <td><span class="money well">{{order.product.price}}</span>
+                    <script type="text/javascript">
+                    $('.money').simpleMoneyFormat();
+                    </script>
+                    <span class> VNĐ</span>
+                    </b></td>                                      
                     <td>{{order.quantity}}</td>
-                    <td>{{order.quantity|multiply:order.price|currency}}</td>
+                    <td><span class="money well">{{order.quantity|multiply:order.price}}</span>
+                    <script type="text/javascript">
+                    $('.money').simpleMoneyFormat();
+                    </script>
+                    <span class> VNĐ</span>
+                    </b></td>                    
                     {% if order.status %}
-                    <td><small class="badge badge-success">Completed</small></td>
+                    <td><small class="badge badge-success">Hoàn thành</small></td>
                     {%else%}
-                    <td><small class="badge badge-warning">Pending</small></td>
+                    <td><small class="badge badge-warning">Chờ thanh toán</small></td>
                     {% endif %}
                 </tr>
 
